@@ -5,15 +5,17 @@ class View(ft.UserControl):
     def __init__(self, page: ft.Page):
         super().__init__()
         # page stuff
+        self.btnIncrementalPath = None
+        self._btnFilmHighGrade = None
         self.btnMyPlaylist = None
         self.txtInMax = None
-        self._btnCreaGrafo = None
-        self.txtInMin = None
+        self._btnCreateGraph = None
+        self.txtInRank = None
         self.txtInDTot = None
-        self.ddGenre = None
-        self.ddGenreValue = None
+        self.ddFilm = None
+        self.ddFilmValue = None
         self._page = page
-        self._page.title = "TdP - Esame	del	02/11/2022	–	appello	riservato	"
+        self._page.title = "TdP - Esame	del	04/09/2020 IMDB"
         self._page.horizontal_alignment = 'CENTER'
         self._page.theme_mode = ft.ThemeMode.LIGHT
         # controller (it is not initialized. Must be initialized in the main, after the controller is created)
@@ -27,45 +29,37 @@ class View(ft.UserControl):
 
     def load_interface(self):
         # title
-        self._title = ft.Text("TdP - Esame	del	02/11/2022	–	appello	riservato	", color="red", size=24)
+        self._title = ft.Text("TdP - Esame	del	04/09/2020 IMDB", color="red", size=24)
         self._page.controls.append(self._title)
 
         #ROW1
-        self.ddGenre = ft.Dropdown(label="Genre", on_change=self.on_ddGenre_change)
-        self._btnCreaGrafo = ft.ElevatedButton(text="Crea Grafo",
-                                               on_click=self._controller.handleCreaGrafo)
+        self.txtInRank = ft.TextField(label="Insert rank")
+        self._btnCreateGraph = ft.ElevatedButton(text="Crea Grafo",
+                                                 on_click=self._controller.handleCreateGraph)
         row1 = ft.Row([
-            ft.Container(self.ddGenre , width=300),
-            ft.Container(self._btnCreaGrafo, width=300)
+            ft.Container(self.txtInRank, width=300),
+            ft.Container(self._btnCreateGraph, width=300)
         ], alignment=ft.MainAxisAlignment.CENTER)
         self._page.controls.append(row1)
 
         #ROW2
-        self.txtInMin = ft.TextField(label="minimum")
-
-
+        self._btnFilmHighGrade = ft.ElevatedButton(text="Highest grade Film",
+                                                   on_click=self._controller.handleHighFilmGrade)
         row2 = ft.Row([
-            ft.Container(self.txtInMin, width=300)
+            ft.Container(self._btnFilmHighGrade, width=300)
         ], alignment=ft.MainAxisAlignment.CENTER)
         self._page.controls.append(row2)
 
         #ROW3
-        self.txtInMax = ft.TextField(label="maximum")
+        self.ddFilm = ft.Dropdown(label="Film", on_change=self.on_ddFilm_change)
+        self.btnIncrementalPath = ft.ElevatedButton(text="Incremental path",
+                                               on_click=self._controller.handleIncrementalPath)
 
         row3 = ft.Row([
-            ft.Container(self.txtInMax, width=300)
+            ft.Container(self.ddFilm, width=300),
+            ft.Container(self.btnIncrementalPath, width=300)
         ], alignment=ft.MainAxisAlignment.CENTER)
         self._page.controls.append(row3)
-        
-        #ROW4
-        self.txtInDTot = ft.TextField(label="dTot")
-        self.btnMyPlaylist = ft.ElevatedButton(text="My playlist",
-                                               on_click=self._controller.handleMyPlaylist)
-        row4 = ft.Row([
-            ft.Container(self.txtInDTot, width=300),
-            ft.Container(self.btnMyPlaylist, width=300)
-        ], alignment=ft.MainAxisAlignment.CENTER)
-        self._page.controls.append(row4)
         
 
         # List View where the reply is printed
@@ -91,8 +85,8 @@ class View(ft.UserControl):
         dlg.open = True
         self._page.update()
 
-    def on_ddGenre_change(self, e):
-        self.ddGenreValue = self.ddGenre.value
+    def on_ddFilm_change(self, e):
+        self.ddFilmValue = self.ddFilm.value
         self.update_page()
 
 

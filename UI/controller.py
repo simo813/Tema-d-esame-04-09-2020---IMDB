@@ -13,13 +13,13 @@ class Controller:
     def fillDD(self):
        pass
 
-    def handleCreaGrafo(self, e):
+    def handleCreateGraph(self, e):
        pass
 
+    def handleHighFilmGrade(self, e):
+        pass
 
-
-
-    def handleMyPlaylist(self, e):
+    def handleIncrementalPath(self, e):
         pass
 
 
